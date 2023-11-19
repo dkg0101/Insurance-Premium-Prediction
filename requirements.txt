@@ -3,5 +3,6 @@ scikit-learn
 pandas 
 numpy
 PyYAML
+pymongo
 dill
 -e .

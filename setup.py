@@ -1,7 +1,7 @@
 from setuptools import find_packages,setup
 from typing import List
 
-PROJECT_NAME='Insurance Premium Prediction'
+PROJECT_NAME='insurance'
 VERSION = '0.0.1'
 AUTHOR = 'Dhananjay Gurav'
 AUTHOR_EMAIL = 'dkgurav0101@gmail.com'
