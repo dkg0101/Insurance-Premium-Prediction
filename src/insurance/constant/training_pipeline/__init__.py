@@ -4,7 +4,7 @@ import os
 TARGET_COLUMN = 'expenses'
 PIPELINE_NAME = 'insurance'
 ARTIFACT_DIR = 'artifacts'
-FILE_NAME = 'data.csv'
+DATA_FILE_NAME = 'data.csv'
 
 TRAIN_FILE_NAME = 'train.csv'
 TEST_FILE_NAME = 'test.csv'
