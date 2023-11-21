@@ -1,8 +1,8 @@
 import pymongo
-from insurance.constant import DATABASE_NAME,COLLECTION_NAME
-from insurance.logger import logging
-from insurance.exception import CustomException
-from insurance.constant import MONGODB_URL_KEY
+from src.insurance.constant import DATABASE_NAME,COLLECTION_NAME
+from src.insurance.logger import logging
+from src.insurance.exception import CustomException
+from src.insurance.constant import MONGODB_URL_KEY
 import certifi,os,sys
 
 ca =certifi.where()

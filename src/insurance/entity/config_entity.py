@@ -1,7 +1,7 @@
 import os,sys
 from datetime import datetime
-from insurance.constant import training_pipeline
-from insurance.exception import CustomException
+from src.insurance.constant import training_pipeline
+from src.insurance.exception import CustomException
 
 
 class TrainingPipelineConfig:

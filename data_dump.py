@@ -1,7 +1,7 @@
-from insurance.logger import logging
-from insurance.exception import CustomException
-from insurance.configuration.mongo_db_connection import MongoDBClient
-from insurance.constant.database import DATABASE_NAME
+from src.insurance.logger import logging
+from src.insurance.exception import CustomException
+from src.insurance.configuration.mongo_db_connection import MongoDBClient
+from src.insurance.constant.database import DATABASE_NAME,COLLECTION_NAME
 from pathlib import Path
 import pymongo 
 import pandas as pd
@@ -37,3 +37,11 @@ def dump_data_to_mongodb(file_path:str,database_name:str,collection_name:str):
         except Exception as e:
             raise CustomException(e,sys)
         
+
+
+if __name__ == "__main__":
+    file_path= "insurance.csv"
+    dump_data_to_mongodb(file_path=file_path,
+                         database_name=DATABASE_NAME,
+                         collection_name=COLLECTION_NAME)
+
