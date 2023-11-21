@@ -1,10 +1,13 @@
-from insurance.logger import logging
-from insurance.exception import CustomException
-from insurance.constant import DATABASE_NAME,COLLECTION_NAME
-from data_dump import dump_data_to_mongodb
+from src.insurance.logger import logging
+from src.insurance.exception import CustomException
+from src.insurance.constant import DATABASE_NAME,COLLECTION_NAME
 
-file_path= "insurance.csv"
-if __name__=="__main__":
-    dump_data_to_mongodb(file_path=file_path,database_name=DATABASE_NAME,collection_name=COLLECTION_NAME)
+from src.insurance.configuration.mongo_db_connection import MongoDBClient
+from src.insurance.pipeline.training_pipeline import TrainingPipeline
 
 
+
+if __name__=='__main__':
+    training_pipeline = TrainingPipeline()
+    training_pipeline.run_pipeline()
+    
