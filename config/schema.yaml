@@ -1,0 +1,19 @@
+columns:
+- age      :  int64  
+- sex      :   object 
+- bmi      :   float64
+- children :   int64  
+- smoker   :   object 
+- region   :   object 
+- expenses :   float64
+
+numerical_columns:
+- age
+- bmi     
+- children  
+- expenses
+
+categorical_columns:
+- sex      
+- smoker   
+- region   
