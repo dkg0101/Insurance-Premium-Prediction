@@ -86,5 +86,15 @@ class ModelTrainerConfig:
             
             except Exception as e:
                 raise CustomException(e,sys)
+            
+class ModelEvaluationConfig:
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        try:
+            self.model_evaluation_dir:str = os.path.join(training_pipeline_config.artifact_dir,training_pipeline.MODEL_EVALUATION_DIR_NAME)
+            self.model_evaluation_report_file_path:str = os.path.join(self.model_evaluation_dir,training_pipeline.MODEL_EVALUATION_REPORT_NAME)
+            self.change_threshold: float = training_pipeline.MODEL_EVALUATION_CHANGED_THRESHOLD_SCORE
+
+        except Exception as e:
+            raise CustomException(e,sys)
 
     

@@ -32,3 +32,11 @@ class ModelTrainerArtifact:
     test_metric_artifact: RegressionMetricArtifact
 
 
+@dataclass
+class ModelEvaluationArtifact:
+    is_model_accepted:bool
+    improved_accuaracy:float
+    best_model_path:str
+    trained_model_path:str
+    best_model_metric_artifact:RegressionMetricArtifact
+    trained_model_metric_artifact:RegressionMetricArtifact
