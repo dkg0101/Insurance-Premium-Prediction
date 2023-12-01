@@ -2,8 +2,10 @@ Flask
 scikit-learn
 pandas 
 numpy
+seaborn
 PyYAML
 pymongo
 dill
 jupyter
+xgboost
 -e .
