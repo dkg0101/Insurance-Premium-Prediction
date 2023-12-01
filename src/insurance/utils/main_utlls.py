@@ -64,3 +64,14 @@ def save__object(file_path:str,obj:object) :
         logging.info(f"Object saved at: {file_path} ")
     except Exception as e:
         raise CustomException(e,sys)
+    
+def load_object(file_path:str):
+    try:
+        if not os.path.exists(file_path):
+            raise Exception(f"Object not found!, {file_path} does not exists")
+        with open(file_path,'rb+') as object:
+            dill.load(object)
+            return dill
+        
+    except Exception as e:
+        CustomException(e,sys)

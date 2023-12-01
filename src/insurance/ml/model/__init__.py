@@ -1,0 +1,1 @@
+from src.insurance.ml.model.estimator import InsuranceModel
