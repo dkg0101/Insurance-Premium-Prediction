@@ -69,9 +69,10 @@ def load_object(file_path:str):
     try:
         if not os.path.exists(file_path):
             raise Exception(f"Object not found!, {file_path} does not exists")
-        with open(file_path,'rb+') as object:
-            dill.load(object)
-            return dill
         
+        with open(file_path, "rb") as file_obj:
+            
+            return dill.load(file_obj)
+            
     except Exception as e:
-        CustomException(e,sys)
+        raise CustomException(e, sys) from e

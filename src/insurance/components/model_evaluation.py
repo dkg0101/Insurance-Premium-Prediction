@@ -32,7 +32,7 @@ class ModelEvaluation:
             train_df = pd.read_csv(valid_train_file_path)
             test_df = pd.read_csv(valid_test_file_path)
 
-            df = pd.concat(train_df,test_df)
+            df = pd.concat([train_df,test_df])
             y_true = df[TARGET_COLUMN]
             
             df.drop(columns=[TARGET_COLUMN],axis=1,inplace=True)
@@ -82,10 +82,13 @@ class ModelEvaluation:
             )
             logging.info(f"model evaluation artifact: {ModelEvaluationArtifact}")
 
+            logging.info("Saving model evaluation report")
             model_evaluation_report = model_evaluation_artifact.__dict__
+            os.makedirs(self.model_evaluation_config.model_evaluation_dir,exist_ok=True)
+            
 
-            logging.info(f"Saving model evaluation report at: {self.model_evaluation_config.model_evaluation_report_file_path}")
-            write_yaml_file(file_path=self.model_evaluation_config.model_evaluation_report_file_path)
+            # logging.info(f"Saving model evaluation report at: {self.model_evaluation_config.model_evaluation_report_file_path}")
+            # write_yaml_file(file_path=self.model_evaluation_config.model_evaluation_report_file_path,content=model_evaluation_report)
 
             return model_evaluation_artifact
         

@@ -19,19 +19,7 @@ class ModelTrainer:
             raise CustomException(e,sys)
         
     
-    def train_model(self,X_train,y_train):
-        try:
-            pass
-
-        except Exception as e:
-            raise CustomException(e,sys)
-        
-    def train_model(self,X_train,y_train):
-        try:
-            pass
-
-        except Exception as e:
-            raise CustomException(e,sys)
+    
         
     def train_model(self,X_train,y_train):
         try:
@@ -89,7 +77,7 @@ class ModelTrainer:
             os.makedirs(model_dir_path,exist_ok=True)
 
             insurance_model = InsuranceModel(preprocessor=preprocessor,model=model)
-            save__object(file_path=self.model_trainer_config.trained_model_file_path)
+            save__object(file_path=self.model_trainer_config.trained_model_file_path,obj=insurance_model)
 
             model_trainer_artifact = ModelTrainerArtifact(
                 trained_model_path=self.model_trainer_config.trained_model_file_path,

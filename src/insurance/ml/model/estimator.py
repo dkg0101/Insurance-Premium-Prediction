@@ -1,5 +1,6 @@
 from src.insurance.constant.training_pipeline import  SAVED_MODEL_DIR,MODEL_FILE_NAME
 import os
+
 class InsuranceModel:
     def __init__(self,preprocessor,model) :
         try:
@@ -9,16 +10,16 @@ class InsuranceModel:
         except Exception as e:
             raise e
         
-        def predict(self,x):
-            try:
-                x_transformed = self.preprocessor.transform(x)
-                y_hat = self.regressor.predict(x_transformed)
+    def predict(self,x):
+        try:
+            x_transformed = self.preprocessor.transform(x)
+            y_hat = self.regressor.predict(x_transformed)
 
-                return y_hat
-            
-            except Exception as e:
-                raise e
-            
+            return y_hat
+        
+        except Exception as e:
+            raise e
+        
 class ModelResolver:
 
     def __init__(self,model_dir = SAVED_MODEL_DIR) :
