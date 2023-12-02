@@ -1,14 +1,21 @@
-from src.insurance.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataValidationConfig,DataTransformationConfig
-from src.insurance.entity.artifact_entity import DataIngestionArtifact,DataValidationArtifact,DataTransformationArtifact
+from src.insurance.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataValidationConfig,\
+DataTransformationConfig,ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig
+from src.insurance.entity.artifact_entity import DataIngestionArtifact,DataValidationArtifact,\
+DataTransformationArtifact, ModelTrainerArtifact,ModelPusherArtifact, ModelEvaluationArtifact 
 from src.insurance.exception import CustomException
 from src.insurance.logger import logging
 from src.insurance.components.data_ingestion import DataIngestion
 from src.insurance.components.data_validation import DataValidation
 from src.insurance.components.data_transformation import DataTransformation
+from src.insurance.components.model_trainer import ModelTrainer
+from src.insurance.components.model_evaluation import ModelEvaluation
+from src.insurance.components.model_pusher import ModelPusher
 import sys,os
 
 
 class TrainingPipeline:
+    is_pipeline_running=False
+
     def __init__(self) :
         self.training_pipeline_config = TrainingPipelineConfig()
     
@@ -54,28 +61,61 @@ class TrainingPipeline:
         except  Exception as e:
             raise  CustomException(e,sys)
 
-    def start_model_trainer(self):
-        try:
-            pass
+    def start_model_trainer(self,data_transformation_artifact:DataTransformationArtifact) -> ModelTrainerArtifact:
+        try: 
+            logging.info("Model training process started...")
+            model_training_config = ModelTrainerConfig(training_pipeline_config=self.training_pipeline_config)
+            model_trainer = ModelTrainer(data_tarnsformation_artifact=data_transformation_artifact,
+                                         model_trainer_config=model_training_config)
+            model_trainer_artifact = model_trainer.initiate_model_trainer()
+            logging.info("Model training Completed.")
+            return model_trainer_artifact
+        
         except  Exception as e:
             raise  CustomException(e,sys)
 
-    def start_model_evaluation(self):
+    def start_model_evaluation(self,model_trainer_artifact:ModelTrainerArtifact,
+                               data_validation_artifact:DataValidationArtifact)-> ModelEvaluationArtifact:
         try:
-            pass
+            logging.info("Model Evaluation Process started..")
+            model_evaluation_config = ModelEvaluationConfig(training_pipeline_config=self.training_pipeline_config)
+            model_evaluation = ModelEvaluation(model_evaluation_config=model_evaluation_config,
+                                               data_validation_artifact=data_validation_artifact,model_trainer_artifact=model_trainer_artifact)
+            model_evaluation_artifact = model_evaluation.initiate_model_evaluation()
+            logging.info("Model Evaluation completed.")
+            return model_evaluation_artifact
+        
         except  Exception as e:
             raise  CustomException(e,sys)
 
-    def start_model_pusher(self):
+    def start_model_pusher(self,model_evluation_artifact:ModelEvaluationArtifact)-> ModelPusherArtifact:
         try:
-            pass
+            logging.info("Model Puhser Started..")
+            model_pusher_config = ModelPusherConfig(training_pipeline_config=self.training_pipeline_config)
+            model_pusher = ModelPusher(model_pusher_config=model_pusher_config,
+                                       model_evaluation_artifact=model_evluation_artifact)
+            model_pusher_artifact = model_pusher.initiate_model_pusher()
+
         except  Exception as e:
             raise  CustomException(e,sys)
 
     def run_pipeline(self):
         try:
+            logging.info("Training Pipeline Initiated..")
+            TrainingPipeline.is_pipeline_running=True
             data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
             data_validation_artifact:DataValidationArtifact = self.start_data_validaton(data_ingestion_artifact=data_ingestion_artifact)
             data_transformation_artifact:DataTransformationArtifact = self.start_data_transformation(data_validation_artifact=data_validation_artifact)
+            model_trainer_artifact:ModelTrainerArtifact = self.start_model_trainer(data_transformation_artifact=data_transformation_artifact)
+            model_evaluation_artifact:ModelEvaluationArtifact = self.start_model_evaluation(model_trainer_artifact=model_trainer_artifact,data_validation_artifact=data_validation_artifact)
+
+            if not model_evaluation_artifact.is_model_accepted :
+                raise Exception("Existing model is better than newly trained Model ")
+            model_pusher_artifact:ModelPusherArtifact = self.start_model_pusher(model_evluation_artifact=model_evaluation_artifact)
+            TrainingPipeline.is_pipeline_running=False
+            
+            logging.info("Training pipeline Completed.")
+
         except  Exception as e:
+            TrainingPipeline.is_pipeline_running=False
             raise  CustomException(e,sys)

@@ -40,3 +40,8 @@ class ModelEvaluationArtifact:
     trained_model_path:str
     best_model_metric_artifact:RegressionMetricArtifact
     trained_model_metric_artifact:RegressionMetricArtifact
+
+@dataclass
+class ModelPusherArtifact:
+    saved_model_path:str
+    model_file_path:str
