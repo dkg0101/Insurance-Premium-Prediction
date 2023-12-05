@@ -1,10 +1,12 @@
 from flask import Flask,render_template,request,jsonify
 from src.insurance.utils.main_utlls import load_object
+from src.insurance.pipeline.training_pipeline import TrainingPipeline
 from src.insurance.ml.model import InsuranceData,InsuranceModel,ModelResolver
 from src.insurance.logger import logging
 from src.insurance.exception import CustomException
 from src.insurance.constant import SAVED_MODEL_DIR
 import pandas as pd 
+import numpy as np
 import os,sys
 app = Flask(__name__)
 
@@ -15,7 +17,25 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-
+@app.route('/train-pipeline',methods=['GET','POST'])
+def train_pipeline():
+    try:
+        train_pipeline = TrainingPipeline()
+        if train_pipeline.is_pipeline_running:
+            return "Training Pipeline is Already running"
+        
+        train_pipeline.run_pipeline()
+        message="Training Completed"
+        return render_template('result.html',response=None,message=message)
+    
+    except Exception as e:
+        logging.exception(e)
+        message = """
+                    Trining pipeline process has been aborted!
+                    because,There is no Imporvement in Accuracy
+                  """
+        return render_template('result.html',response=None,message=message)
+    
 @app.route("/get-prediction",methods=["POST"])
 def get_prediction():
   return render_template("predict.html")
@@ -33,7 +53,6 @@ def predict():
         smoker = request.form["smoker"]
         region = request.form["region"]
 
-        print('received data is,', age,sex,bmi,children,smoker,region)
 
         insurance_data = InsuranceData(age=age,
                                        sex=sex,
@@ -41,7 +60,7 @@ def predict():
                                     children=children,
                                     smoker=smoker,
                                     region=region)
-        print(insurance_data.__dict__)
+        logging.info(f"Input data is {insurance_data.__dict__}")
         
 
         input_df = insurance_data.get__input_data_frame()
@@ -51,20 +70,23 @@ def predict():
 
         # Make prediction using the model and input data
         predicted_premium = model.predict(input_df)
-        print(f"Predicted premium is: {predicted_premium} and type ooutput is {type(predicted_premium)}")
+
+        logging.info(f"Predicted premium is: {int(predicted_premium)} and type ootput is {type(predicted_premium)}")
 
         # Prepare response with predicted premium
         response = {
-            'premium': f"{round(predicted_premium[0],3)} Rs",
+            'premium': f"{int(predicted_premium)}",
             'input_data': insurance_data.__dict__
             }
 
         return render_template('result.html', response=response)
     except Exception as e:
         raise CustomException(e,sys)
+    
+
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
 
 
 

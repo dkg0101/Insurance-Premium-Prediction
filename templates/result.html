@@ -3,21 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <title>Insurance Prediction Result</title>
+    <style>
+        body {
+          background-image:  url('https://images.pexels.com/photos/399161/pexels-photo-399161.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          height: 100vh;
+          margin: 0; /* Remove default body margin */
+          display: flex;
+          justify-content: center;
+        }
+    
+        form {
+          height: auto;
+          width: 500px;
+          padding: 20px;
+          border-radius: 10px;
+          
+        }
+    
+        label {
+          display: block;
+          margin-bottom: 5px;
+        }
+    
+        input, select {
+          width: 100%;
+          padding: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+    
+        button {
+          background-color: #007bff;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .btn-spacing {
+          margin-right: 10px;
+        }
+        .result-container {
+        margin: 0 auto;
+        width: 500px;
+        padding: 20px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+       }
+
+        .message-container {
+            text-align: center;
+       }
+
+    </style>
 </head>
 <body>
-    <h1>Insurance Prediction Result</h1>
+    <div class="result-container">
+        {% if response is not none %}
+            <div>
+                <h1>Insurance Prediction Result</h1>
+                <h4>Your insurance premium is Rs. <b>{{ response.premium }}</b></h4>
 
-    <p>Your insurance premium is <b>{{ response.premium }}</b>.</p>
+                <form>
+                    <p>This is based on the following data:</p>
 
-    <p>This is based on the following data:</p>
+                    <ul>
+                        <li>Age: {{ response.input_data.age }}</li>
+                        <li>Sex: {{ response.input_data.sex }}</li>
+                        <li>Smoker: {{ response.input_data.smoker }}</li>
+                        <li>Children: {{ response.input_data.children }}</li>
+                        <li>Region: {{ response.input_data.region }}</li>
+                        <li>BMI: {{ response.input_data.bmi }}</li>
+                    </ul>
+                    <p>Please note that this is just an estimate. The actual premium may vary depending on the insurance company and other factors.</p>
 
-    <ul>
-        <li>Age: {{ response.input_data.age }}</li>
-        <li>Sex: {{ response.input_data.sex }}</li>
-        <li>Smoker: {{ response.input_data.smoker }}</li>
-        <li>Children: {{ response.input_data.children }}</li>
-        <li>Region: {{ response.input_data.region }}</li>
-        <li>BMI: {{ response.input_data.bmi }}</li>
-    </ul>
-    <p>Please note that this is just an estimate. The actual premium may vary depending on the insurance company and other factors.</p>
+                    <a class="btn btn-primary" href="/get-prediction">Go Back</a>
+                </form>
+            </div>
+        {% else %}
+            <div class="message-container">
+                <p>{{message}}</p>
+                <a class="btn btn-primary" href="/">Go Back To Homepage</a>
+            </div>
 
+        {% endif %}
+    </div>
+</body>
