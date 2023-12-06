@@ -69,7 +69,7 @@
                 <h1>Insurance Prediction Result</h1>
                 <h4>Your insurance premium is Rs. <b>{{ response.premium }}</b></h4>
 
-                <form>
+                <form action="/get-prediction" method="post">
                     <p>This is based on the following data:</p>
 
                     <ul>
@@ -82,7 +82,7 @@
                     </ul>
                     <p>Please note that this is just an estimate. The actual premium may vary depending on the insurance company and other factors.</p>
 
-                    <a class="btn btn-primary" href="/get-prediction">Go Back</a>
+                    <button type="submit">Go Back</button>
                 </form>
             </div>
         {% else %}
