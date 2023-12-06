@@ -5,6 +5,7 @@ from src.insurance.ml.model import InsuranceData,InsuranceModel,ModelResolver
 from src.insurance.logger import logging
 from src.insurance.exception import CustomException
 from src.insurance.constant import SAVED_MODEL_DIR
+from src.insurance.constant.application import APP_HOST,APP_PORT
 import pandas as pd 
 import numpy as np
 import os,sys
@@ -86,7 +87,7 @@ def predict():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host=APP_HOST,port=APP_PORT)
 
 
 
