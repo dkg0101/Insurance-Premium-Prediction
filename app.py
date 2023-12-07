@@ -31,9 +31,9 @@ def train_pipeline():
     
     except Exception as e:
         logging.exception(e)
-        message = """
-                    Trining pipeline process has been aborted!
-                    because,There is no Imporvement in Accuracy
+        message = f"""
+                    Trining pipeline process has been aborted!\n
+                    error message:{e}
                   """
         return render_template('result.html',response=None,message=message)
     
