@@ -14,12 +14,15 @@
       height: 100vh;
     }
 
+
+
     form {
       position: absolute;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
       width: 500px;
+      height: auto;
       background-color: #fff;
       padding: 20px;
       border-radius: 10px;
@@ -39,6 +42,7 @@
 
     button {
       background-color: #007bff;
+      position: relative;
       color: #fff;
       padding: 10px 20px;
       border: none;
@@ -48,8 +52,9 @@
   </style>
 </head>
 <body>
+  <div class="prediction">
   
-    <h1>Insurance Prediction</h1>
+    <h2>Insurance Prediction</h2>
     <form action="/predict" method="post">
 
         <label for="age">Age:</label>
@@ -83,6 +88,12 @@
 
         <button type="submit">Predict</button>
     </form>
+  </div>
+
+  <div class="homebutton">
+    <a class="btn btn-primary" href="/">Go Back To Homepage</a>
+  </div>
+
 
 </body>
 </html>
