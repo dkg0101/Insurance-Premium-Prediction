@@ -18,25 +18,7 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route('/train-pipeline',methods=['GET','POST'])
-def train_pipeline():
-    try:
-        train_pipeline = TrainingPipeline()
-        if train_pipeline.is_pipeline_running:
-            return "Training Pipeline is Already running"
-        
-        train_pipeline.run_pipeline()
-        message="Training Completed"
-        return render_template('result.html',response=None,message=message)
-    
-    except Exception as e:
-        logging.exception(e)
-        message = f"""
-                    Trining pipeline process has been aborted!\n
-                    error message:{e}
-                  """
-        return render_template('result.html',response=None,message=message)
-    
+
 @app.route("/get-prediction",methods=["POST"])
 def get_prediction():
   return render_template("predict.html")
