@@ -1,5 +1,4 @@
-artifact
-venv
+env
 docs
 notebooks
 .git
