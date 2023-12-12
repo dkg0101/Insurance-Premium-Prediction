@@ -1,4 +1,4 @@
-# Title: Insurance premium Price Prediction
+# Title: Insurance Premium Price Prediction
 
 ## Problem Statement:
 **The goal of this project is to give people an estimate of how much they need based on
