@@ -105,6 +105,7 @@ class TrainingPipeline:
 
     def sync_artifact_dir_to_s3(self):
         try:
+            logging.info("Storing artifact dir at S3 bucket")
             aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/artifact/{self.training_pipeline_config.timestamp}"
             self.s3_sync.sync_folder_to_s3(folder = self.training_pipeline_config.artifact_dir,aws_bucket_url=aws_bucket_url)
         except Exception as e:
@@ -112,6 +113,7 @@ class TrainingPipeline:
     
     def sync_saved_model_dir_to_s3(self):
         try:
+            logging.info("Storing saved model at s3 bucket")
             aws_bucket_url = f"s3://{TRAINING_BUCKET_NAME}/{SAVED_MODEL_DIR}"
             self.s3_sync.sync_folder_to_s3(folder = SAVED_MODEL_DIR,aws_bucket_url=aws_bucket_url)
         except Exception as e:
@@ -133,7 +135,10 @@ class TrainingPipeline:
             TrainingPipeline.is_pipeline_running=False
             
             logging.info("Training pipeline Completed.")
+            self.sync_artifact_dir_to_s3()
+            self.sync_saved_model_dir_to_s3()
 
         except  Exception as e:
+            self.sync_artifact_dir_to_s3()
             TrainingPipeline.is_pipeline_running=False
             raise  CustomException(e,sys)
