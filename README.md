@@ -29,7 +29,9 @@ git clone https://github.com/dkg0101/Insurance-Premium-Prediction.git
 Open the terminal and run:
 ```
 conda create -p <envName> python==3.8 -y
-
+```
+Now activate the environment
+```
 conda activate ./<envName>
 ```
 Install the requirements by running 
