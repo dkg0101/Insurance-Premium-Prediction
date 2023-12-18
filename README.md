@@ -9,6 +9,8 @@ insurance policy rather than the ineffective part. Also Insurace provider compan
 use this model to get health expenses of an individual based on attribute values so that
 they can design and provide personlised premium plan to particuler customer**
 
+### Poject Demo Video on LinkedIn
+[click here](https://www.linkedin.com/posts/dhananjay-gurav-77a42a219_machinelearning-datascience-pythonfordatascience-activity-7140553797650624512-1p36?utm_source=share&utm_medium=member_desktop)
 
 ![Project Workflow](https://github.com/dkg0101/Insurance-Premium-Prediction/blob/main/images/training%20pipeline%20workflow.png)
 
