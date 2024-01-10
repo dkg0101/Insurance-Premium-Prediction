@@ -12,7 +12,7 @@ they can design and provide personlised premium plan to particuler customer**
 ### To see Poject Demo Video on LinkedIn
 [click here](https://www.linkedin.com/posts/dhananjay-gurav-77a42a219_machinelearning-datascience-pythonfordatascience-activity-7140553797650624512-1p36?utm_source=share&utm_medium=member_desktop)
 
-### Project Source code Workflow:
+### Source code Workflow followed in this project is,
 ![Project Workflow](image.png)
 
 ## To run this project, follow the steps:
